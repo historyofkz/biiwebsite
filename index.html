@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <meta charset="UTF-8">
+  <title>Бии – хранители справедливости и закона</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: #fdfcf7 url("images/ornament.png") repeat;
+      background-size: 200px;
+      color: #222;
+    }
+    header {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(rgba(80,40,20,0.9), rgba(50,25,15,0.9));
+      color: #fff;
+    }
+    header h1 {
+      font-size: 42px;
+      margin: 0;
+      text-shadow: 2px 2px 6px #000;
+    }
+    header p {
+      font-size: 20px;
+    }
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin-top: 30px;
+    }
+    h2 {
+      text-align: center;
+      color: #6b2e14;
+      border-bottom: 2px solid #6b2e14;
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+    .bi-cards {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .bi-card {
+      width: 320px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s;
+      padding-bottom: 15px;
+    }
+    .bi-card:hover {
+      transform: scale(1.05);
+    }
+    .bi-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+    .bi-card h3 {
+      margin: 10px 0;
+      color: #5a1f0c;
+    }
+    .bi-card p {
+      text-align: justify;
+      padding: 0 15px;
+    }
+    #map {
+  height: 500px;
+  width: 100%;
+  border-radius: 15px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+    /* Тест */
+    .quiz {
+      margin-top: 30px;
+    }
+    .quiz button {
+      background: #6b2e14;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .quiz button:hover {
+      background: #8b3c1c;
+    }
+    .result {
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 18px;
+      color: #2e5b14;
+    }
+    footer {
+      text-align: center;
+      background: #6b2e14;
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Бии – хранители справедливости и закона у казахского народа</h1>
+    <p>Как без писаных законов поддерживалась справедливость и чему нас учат решения великих биев?</p>
+  </header>
+
+  <section>
+    <h2>Роль биев в обществе</h2>
+    <p>
+      В традиционном казахском обществе <b>бии</b> были не просто судьями — они были хранителями чести, совести и справедливости народа. 
+      Их задача заключалась в том, чтобы решать споры, выносить справедливые решения и сохранять единство общества. 
+      Решения биев опирались не на писаные законы, а на <i>адат</i> (обычное право), мудрость предков и глубокое знание традиций. 
+    </p>
+    <p>
+      Благодаря институту биев казахский народ веками жил в условиях порядка и гармонии, даже не имея официальной судебной системы. 
+      Изучая наследие биев сегодня, мы понимаем, что их идеи о справедливости и единстве важны и для воспитания гражданской позиции современного человека.
+    </p>
+  </section>
+
+  <section>
+    <h2>Три великих би</h2>
+    <div class="bi-cards">
+      <div class="bi-card">
+        <img src="images/tolebi.jpg" alt="Төле би">
+        <h3>Төле би Әлібекұлы (1663–1756)</h3>
+        <p>
+          Старший би Старшего жуза. С детства отличался мудростью, за что его называли «Әлібек ұлының Төле биі». 
+          Он умел предотвращать кровопролитные споры и стремился к миру. 
+          Төле би участвовал в объединении казахских жузов и в решении вопросов борьбы против джунгар. 
+          Его изречения стали пословицами, например: <i>«Жаңбырмен жер көгереді, батамен ел көгереді»</i> («Земля зеленеет от дождя, народ процветает от благословения»).
+        </p>
+      </div>
+      <div class="bi-card">
+        <img src="images/kazybekbi.jpg" alt="Қазыбек би">
+        <h3>Қазыбек би Келдібекұлы (1667–1764)</h3>
+        <p>
+          Би Среднего жуза, известный своей храбростью и красноречием. 
+          В юности он прославился, когда смело обратился к джунгарскому хану: 
+          <i>«Мы – народ, не стремящийся к войне, но если придёт беда, не уступим ни земли, ни чести»</i>. 
+          С тех пор его слова стали символом мужества. 
+          Қазыбек би всегда ставил на первое место правду и честь народа, выступал за независимость и единство казахов.
+        </p>
+      </div>
+      <div class="bi-card">
+        <img src="images/aytekebi.jpg" alt="Әйтеке би">
+        <h3>Әйтеке би Байбекұлы (1644–1700)</h3>
+        <p>
+          Би Младшего жуза, выходец из рода алшын. Отличался образованностью и ораторским талантом. 
+          Он принимал участие в разработке «Жеті Жарғы» – свода казахских законов, созданного при Тәуке хане. 
+          Әйтеке би боролся против несправедливости и жадности, выступал за равенство и согласие. 
+          Его решения помогали укреплять единство народа в трудные годы внешних угроз.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Бии Северо-Казахстанской области</h2>
+    <p>
+      В Северо-Казахстанской области и соседних регионах бии также играли огромную роль. 
+      Они рассматривали семейные, хозяйственные и земельные споры, решали конфликты между родами. 
+      Благодаря их мудрости удавалось избегать кровавых столкновений и сохранять мир в степи. 
+      Сохранились предания о местных биях, которые могли одним словом примирить две враждующие стороны.
+    </p>
+    <div class="map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624966.265318858!2d67.0!3d54.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43b0df9f2a7cd3e1%3A0x6e7f3cf2ec0a4f35!2sNorth%20Kazakhstan%20Region!5e0!3m2!1sen!2skz!4v1694641600000!5m2!1sen!2skz"></iframe>
+    </div>
+  </section>
+
+  <section class="quiz">
+    <h2>Проверь свои знания</h2>
+    <form id="quizForm">
+      <p>1. Кто участвовал в создании «Жеті Жарғы»?</p>
+      <input type="radio" name="q1" value="Әйтеке би"> Әйтеке би<br>
+      <input type="radio" name="q1" value="Қазыбек би"> Қазыбек би<br>
+      <input type="radio" name="q1" value="Төле би"> Төле би<br>
+
+      <p>2. Чьи слова о независимости стали символом мужества?</p>
+      <input type="radio" name="q2" value="Төле би"> Төле би<br>
+      <input type="radio" name="q2" value="Қазыбек би"> Қазыбек би<br>
+      <input type="radio" name="q2" value="Әйтеке би"> Әйтеке би<br>
+
+      <p>3. Какую роль выполняли бии?</p>
+      <input type="radio" name="q3" value="Судьи"> Решали споры и охраняли справедливость<br>
+      <input type="radio" name="q3" value="Воины"> Были только воинами<br>
+      <input type="radio" name="q3" value="Поэты"> Были только акынами<br><br>
+
+      <button type="button" onclick="checkQuiz()">Проверить</button>
+    </form>
+    <div class="result" id="result"></div>
+  </section>
+
+  <footer>
+    <p>© 2025. Проект: "Бии – хранители справедливости и закона у казахского народа".</p>
+  </footer>
+
+  <script>
+    function checkQuiz() {
+      let score = 0;
+      const form = document.forms["quizForm"];
+      if(form.q1.value === "Әйтеке би") score++;
+      if(form.q2.value === "Қазыбек би") score++;
+      if(form.q3.value === "Судьи") score++;
+      document.getElementById("result").innerText = 
+        "Ваш результат: " + score + " из 3";
+    }
+  </script>
+      <!-- Подключаем наш JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
